@@ -1,0 +1,47 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
+!define DEVICONS2 https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons2
+
+SHOW_PERSON_OUTLINE()
+LAYOUT_WITH_LEGEND()
+
+Person(ClienteBanco, "Cliente do Banco", "Informações do cliente do banco")
+
+
+System_Boundary(SistemaBanco, "Sistema de internet do Banco"){
+    Container(SPA, "Angular", "technology", $sprite="angular")
+    Container(Aplicação_Web, "Aplicação Web", "Spring MVC", $sprite="spring")
+    Container(mobile, "Mobile", "ReactNative", $sprite="react")
+
+
+    ContainerDb(db, "Banco de Dados", "Oracle", $sprite="oracle_original")
+    Container(api, "API Rest", "Java", $sprite="java")
+}
+
+System_Ext(SistemaEmail, "Sistema de Envio de Email", "Enviar e-mails relacionado as operações do banco ao cliente")
+System_Ext(MainFrame, "Sistema principal do Banco", "Armazena dados do banco e trata todas as informações do cliente")
+
+Rel(ClienteBanco, Aplicação_Web, "Visits bigbank")
+Rel(ClienteBanco, SPA, "Views accounts")
+Rel(ClienteBanco, mobile, "Views accounts")
+Rel(SPA, api, "Makes api calls to ")
+Rel(mobile, api, "Makes api calls to ")
+Rel(api, db, "reads from and writes to")
+
+Rel(api, MainFrame, "makes API calls to")
+Rel(api, SistemaEmail, "Sends e-mail using")
+Rel(SistemaEmail, ClienteBanco, "Sends e-mail to")
+Rel(Aplicação_Web, SPA, "Delivers to the customer's web broser ")
+
+
+
+
+!include DEVICONS/angular.puml
+!include DEVICONS/java.puml
+!include DEVICONS/react.puml
+!include DEVICONS2/spring.puml
+!include DEVICONS2/oracle_original.puml
+
+
+@enduml

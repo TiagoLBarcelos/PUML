@@ -1,0 +1,24 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
+!define DEVICONS2 https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons2
+
+SHOW_PERSON_OUTLINE()
+LAYOUT_WITH_LEGEND()
+
+Person(ClienteBanco, "Cliente do Banco", "Informações do cliente do banco")
+System(SistemaBanco, "Sistema de internet do Banco","Aplicação do banco pela internet")
+System_Ext(SistemaEmail, "Sistema de Envio de Email", "Enviar e-mails relacionado as operações do banco ao cliente")
+System_Ext(MainFrame, "Sistema principal do Banco", "Armazena dados do banco e trata todas as informações do cliente")
+
+
+Rel(ClienteBanco, SistemaBanco, "Cliente/Sistema")
+Rel_R(SistemaBanco, SistemaEmail, "Sistema/SistemaEmail")
+Rel_D(SistemaBanco, MainFrame, "Sistema/SistemaPrincipal")
+Rel_U(SistemaEmail, ClienteBanco, "SistemaEmail/Cliente")
+
+
+!include DEVICONS/angular.puml
+!include DEVICONS2/java.puml
+
+@enduml
